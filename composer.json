@@ -36,7 +36,6 @@
         "hyperf/redis": "~1.1.0",
         "hyperf/utils": "~1.1.0",
         "hyperf/config-aliyun-acm": "^1.1",
-        "tymon/jwt-auth": "1.0.*",
         "illuminate/hashing": "^6.5",
         "gregwar/captcha": "^1.1",
         "phper666/jwt-auth": "~2.0.1",
@@ -44,8 +43,7 @@
         "hyperf/translation": "^1.1",
         "hyperf/constants": "^1.1",
         "hyperf/json-rpc": "^1.1",
-        "hyperf/rpc-server": "^1.1",
-        "hyperf/rpc-client": "^1.1"
+        "hyperf/rpc-server": "^1.1"
     },
     "require-dev": {
         "swoft/swoole-ide-helper": "^4.2",
