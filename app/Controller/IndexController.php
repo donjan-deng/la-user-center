@@ -39,8 +39,7 @@ class IndexController extends AbstractController {
             'config' => $this->config->get('databases.default.username'),
             'password' => $this->hash->make('123456'),
             'captcha' => $this->cache->get($this->request->cookie('captcha', '')),
-            'user' => $this->request->user,
-            'getuser' => $client->getUser('111')
+            'user' => $this->request->user
         ];
     }
 
