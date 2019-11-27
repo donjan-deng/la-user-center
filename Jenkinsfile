@@ -11,6 +11,7 @@ pipeline {
             agent { dockerfile true }
             steps {
                 // sh '/opt/www/vendor/bin/co-phpunit -c /opt/www/phpunit.xml --colors=always'
+                echo 'test'
             }
         }
         stage('Deploy') { //发布到仓库
