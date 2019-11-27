@@ -14,7 +14,7 @@ return [
     // 您的配置对应的 Group
     'group' => env('ALIYUN_ACM_GROUP', 'USER_CENTER'),
     // 您的阿里云账号的 Access Key
-    'access_key' => env('ALIYUN_ACM_AK', 'LTAI4Fs5UKGdZD8EP3Q7ud4Q'),
+    'access_key' => env('ALIYUN_ACM_AK', ''),
     // 您的阿里云账号的 Secret Key
-    'secret_key' => env('ALIYUN_ACM_SK', 'gREiiXis229mYAqoS9q59pCTFzYeHw'),
+    'secret_key' => env('ALIYUN_ACM_SK', ''),
 ];
