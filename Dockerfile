@@ -49,10 +49,11 @@ COPY . /opt/www
 
 WORKDIR /opt/www
 
-RUN composer install --no-dev \
+RUN composer install \
     && composer dump-autoload -o \
     && php /opt/www/bin/hyperf.php di:init-proxy
 
 EXPOSE 9501
+EXPOSE 9504
 
 ENTRYPOINT ["php", "/opt/www/bin/hyperf.php", "start"]
