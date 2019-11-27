@@ -10,7 +10,7 @@ pipeline {
         stage('Test') { //执行测试
             agent { dockerfile true }
             steps {
-                sh 'cd /opt/www && composer test'
+                sh 'cd /opt/www && vendor/bin/co-phpunit -c phpunit.xml --colors=always'
             }
         }
         stage('Deploy') { //发布到仓库
