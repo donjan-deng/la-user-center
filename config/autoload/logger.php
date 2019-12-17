@@ -28,26 +28,26 @@ return [
             ],
         ],
     ],
-    'elasticsearch' => [
-        'handler' => [
-            'class' => Monolog\Handler\ElasticsearchHandler::class,
-            'constructor' => [
-                'client' => Hyperf\Utils\ApplicationContext::getContainer()->get(Hyperf\Elasticsearch\ClientBuilderFactory::class)->create()
-                        ->setHosts(explode(',', env('ELASTIC_HOST')))
-                        ->build(),
-                'options' => [
-                    'index' => 'user-center-log', // Elastic index name
-                    'type' => '_doc', // Elastic document type
-                    'ignore_error' => false, // Suppress Elasticsearch exceptions
-                ],
-            ],
-        ],
-        'formatter' => [
-            'class' => Monolog\Formatter\ElasticsearchFormatter::class,
-            'constructor' => [
-                'index' => 'user-center-log',
-                'type' => '_doc',
-            ],
-        ],
-    ],
+//    'elasticsearch' => [
+//        'handler' => [
+//            'class' => Monolog\Handler\ElasticsearchHandler::class,
+//            'constructor' => [
+//                'client' => Hyperf\Utils\ApplicationContext::getContainer()->get(Hyperf\Elasticsearch\ClientBuilderFactory::class)->create()
+//                        ->setHosts(explode(',', env('ELASTIC_HOST')))
+//                        ->build(),
+//                'options' => [
+//                    'index' => 'user-center-log', // Elastic index name
+//                    'type' => '_doc', // Elastic document type
+//                    'ignore_error' => false, // Suppress Elasticsearch exceptions
+//                ],
+//            ],
+//        ],
+//        'formatter' => [
+//            'class' => Monolog\Formatter\ElasticsearchFormatter::class,
+//            'constructor' => [
+//                'index' => 'user-center-log',
+//                'type' => '_doc',
+//            ],
+//        ],
+//    ],
 ];
