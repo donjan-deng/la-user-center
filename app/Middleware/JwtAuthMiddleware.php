@@ -15,7 +15,8 @@ use Phper666\JwtAuth\Jwt;
 use Phper666\JwtAuth\Exception\TokenValidException;
 use App\Model\User;
 
-class JwtAuthMiddleware implements MiddlewareInterface {
+class JwtAuthMiddleware implements MiddlewareInterface
+{
 
     /**
      * @Inject
@@ -29,21 +30,22 @@ class JwtAuthMiddleware implements MiddlewareInterface {
      */
     protected $jwt;
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
         try {
             $token = $this->jwt->getTokenObj();
             if ($this->jwt->checkToken()) {
                 $userId = $token->getClaim('user_id');
                 $user = User::where('user_id', $userId)->where('status', User::STATUS_ENABLE)->first();
-                if ($user) {
-                    $this->request->user = $user;
-                    return $handler->handle($request);
+                if (!$user) {
+                    throw new TokenValidException('Token未验证通过', 401);
                 }
+                $this->request->user = $user;
             }
         } catch (\Exception $e) {
             throw new TokenValidException('Token未验证通过', 401);
         }
-        throw new TokenValidException('Token未验证通过', 401);
+        return $handler->handle($request);
     }
 
 }

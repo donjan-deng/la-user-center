@@ -12,9 +12,11 @@ declare(strict_types = 1);
 return [
     'handler' => [
         'http' => [
-            App\Exception\Handler\AppExceptionHandler::class,
+            App\Exception\Handler\AppClientExceptionHandler::class,
             App\Exception\Handler\AppValidationExceptionHandler::class,
             App\Exception\Handler\AppTokenValidExceptionHandler::class,
+            App\Exception\Handler\UnauthorizedExceptionHandler::class,
+            App\Exception\Handler\AppExceptionHandler::class,
         ],
     ],
 ];

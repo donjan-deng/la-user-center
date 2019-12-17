@@ -4,11 +4,22 @@ declare(strict_types = 1);
 
 namespace App\Model;
 
-class User extends Model {
+use Donjan\Permission\Traits\HasRoles;
+
+class User extends Model
+{
+
+    use HasRoles;
 
     protected $table = 'user';
     protected $primaryKey = 'user_id';
     protected $guarded = ['created_at', 'last_login_at', 'updated_at'];
+    protected $fillable = [
+        'username', 'email', 'phone', 'password', 'sex', 'real_name'
+    ];
+    protected $hidden = [
+        'password', 'remember_token', 'updated_at'
+    ];
     protected $attributes = [
         'status' => 1,
     ];
@@ -18,22 +29,18 @@ class User extends Model {
         2 => '女',
     ];
 
-    public function getSexTextAttribute() {
-        return $this->attributes['sex_text'] = get_format_state($this->attributes['sex'], self::$sex);
+    public function getSexTextAttribute()
+    {
+        return $this->attributes['sex_text'] = $this->getFormatState($this->attributes['sex'], self::$sex);
     }
 
-    public function getStatusTextAttribute() {
-        return $this->attributes['status_text'] = get_format_state($this->attributes['status'], self::$status);
+    public function getStatusTextAttribute()
+    {
+        return $this->attributes['status_text'] = $this->getFormatState($this->attributes['status'], self::$status);
     }
 
-    protected $fillable = [
-        'username', 'email', 'phone', 'password',
-    ];
-    protected $hidden = [
-        'password', 'remember_token', 'updated_at'
-    ];
-
-    protected function getList($params, $pageSize) {
+    protected function getList(array $params, int $pageSize)
+    {
         $query = $this->with('roles')->where('user_id', '<>', config('app.super_admin'));
         (isset($params['status']) && $params['status'] !== "") && $query->where('status', '=', $params['status']);
         (isset($params['username']) && !empty($params['username'])) && $query->where('username', 'like', "%{$params['username']}%");

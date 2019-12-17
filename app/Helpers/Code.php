@@ -10,7 +10,8 @@ use Hyperf\Constants\Annotation\Constants;
 /**
  * @Constants
  */
-class Code extends AbstractConstants {
+class Code extends AbstractConstants
+{
 
     /**
      * @Message("Request Error！")
@@ -33,9 +34,19 @@ class Code extends AbstractConstants {
     const DISALLOW = 403;
 
     /**
+     * @Message("请求参数错误")
+     */
+    const BAD_REQUEST = 400;
+
+    /**
      * @Message("请求资源不存在")
      */
     const RECORD_NOT_FOUND = 404;
+
+    /**
+     * @Message("Method Not Allowed")
+     */
+    const METHOD_NOT_ALLOWED = 405;
 
     /**
      * @Message("保存数据失败，请重试")

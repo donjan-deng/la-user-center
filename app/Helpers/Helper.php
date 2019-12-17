@@ -6,15 +6,18 @@ namespace App\Helpers;
 
 use App\Helpers\Code;
 
-Class Helper {
+Class Helper
+{
 
     //返回成功
-    public function success($data) {
+    public function success($data)
+    {
         return $this->result(Code::SUCCESS, Code::getMessage(Code::SUCCESS), $data);
     }
 
     //返回错误
-    public function error($code = 422, $message = '', $data = []) {
+    public function error($code = 422, $message = '', $data = [])
+    {
         if (empty($message)) {
             return $this->result($code, Code::getMessage($code), $data);
         } else {
@@ -22,11 +25,13 @@ Class Helper {
         }
     }
 
-    public function result($code, $message, $data) {
+    public function result($code, $message, $data)
+    {
         return ['code' => $code, 'message' => $message, 'data' => $data];
     }
 
-    public function jsonEncode($data) {
+    public function jsonEncode($data)
+    {
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
@@ -35,7 +40,8 @@ Class Helper {
      * @param number $length
      * @return number
      */
-    public function generateNumber($length = 6) {
+    public function generateNumber($length = 6)
+    {
         return rand(pow(10, ($length - 1)), pow(10, $length) - 1);
     }
 
@@ -45,7 +51,8 @@ Class Helper {
      * @param string $chars
      * @return string
      */
-    public function generateString($length = 6, $chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz') {
+    public function generateString($length = 6, $chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+    {
         $chars = str_split($chars);
 
         $chars = array_map(function($i) use($chars) {
@@ -60,7 +67,8 @@ Class Helper {
      * @param type $xml
      * @return type
      */
-    public function xml2array($xml) {
+    public function xml2array($xml)
+    {
         return json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
     }
 

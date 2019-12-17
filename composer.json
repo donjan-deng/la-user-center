@@ -28,7 +28,7 @@
         "hyperf/framework": "~1.1.0",
         "hyperf/guzzle": "~1.1.0",
         "hyperf/http-server": "~1.1.0",
-        "hyperf/logger": "~1.1.0",
+        "hyperf/logger": "^1.1",
         "hyperf/memory": "~1.1.0",
         "hyperf/paginator": "~1.1.0",
         "hyperf/pool": "~1.1.0",
@@ -43,7 +43,9 @@
         "hyperf/translation": "^1.1",
         "hyperf/constants": "^1.1",
         "hyperf/json-rpc": "^1.1",
-        "hyperf/rpc-server": "^1.1"
+        "hyperf/rpc-server": "^1.1",
+        "hyperf/elasticsearch": "^1.1",
+        "donjan-deng/hyperf-permission": "dev-master"
     },
     "require-dev": {
         "swoft/swoole-ide-helper": "^4.2",
@@ -83,5 +85,15 @@
         "cs-fix": "php-cs-fixer fix $1",
         "analyze": "phpstan analyse --memory-limit 300M -l 0 -c phpstan.neon ./app ./config",
         "start": "php ./bin/hyperf.php start"
+    },
+    "repositories": {
+        "donjan-deng/hyperf-permission": { 
+            "type": "git", 
+            "url": "https://github.com/donjan-deng/hyperf-permission.git" 
+        },
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer"
+        }
     }
 }

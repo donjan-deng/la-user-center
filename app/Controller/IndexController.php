@@ -11,12 +11,14 @@ use Gregwar\Captcha\PhraseBuilder;
 use Hyperf\HttpMessage\Stream\SwooleStream;
 use Hyperf\HttpMessage\Cookie\Cookie;
 use Phper666\JwtAuth\Jwt;
+use Carbon\Carbon;
 use App\Request\LoginRequest;
-use App\Model\User;
 use App\Helpers\Code;
-use Hyperf\Utils\ApplicationContext;
+use App\Model\User;
+use App\Exception;
 
-class IndexController extends AbstractController {
+class IndexController extends AbstractController
+{
 
     /**
      * @Inject
@@ -30,45 +32,48 @@ class IndexController extends AbstractController {
      */
     protected $jwt;
 
-    public function index() {
-        $user = $this->request->input('user', 'Hyperf');
+    public function index()
+    {
         $method = $this->request->getMethod();
         return [
             'method' => $method,
-            'message' => "Hello {$user}.",
-            // 'config' => $this->config->get('databases.default.username'),
-            // 'password' => $this->hash->make('123456'),
-            // 'captcha' => $this->cache->get($this->request->cookie('captcha', '')),
-            // 'user' => $this->request->user
+            'message' => 'hyperf',
         ];
     }
 
     //获取token
-    public function token(Jwt $jwt, LoginRequest $request) {
+    public function token(LoginRequest $request)
+    {
         $username = $request->input('username');
         $password = $request->input('password');
         $user = User::where('username', '=', $username)->first();
         if (!$user) {
-            return $this->helper->error(Code::ERROR, "用户{$username}不存在");
+            throw new Exception\AppNotFoundException("用户{$username}不存在");
         }
         if (!$this->hash->check($password, $user->password)) {
-            return $this->helper->error(Code::INCORRECT_PASSWORD);
+            throw new Exception\AppBadRequestException("用户名或者密码错误");
         }
         if ($user->status != User::STATUS_ENABLE) {
-            return $this->helper->error(Code::USER_DISABLE);
+            throw new Exception\AppNotAllowedException("用户{$username}已禁用");
         }
+        $user->last_login_at = Carbon::now();
+        $user->save();
         $token = (string) $this->jwt->getToken(['user_id' => $user->user_id]);
-        return $this->helper->success(['access_token' => $token, 'expires_in' => $jwt->getTTL()]);
+        $user['menu'] = $user->getMenu();
+        $user['all_permissions'] = $user->getAllPermissions();
+        return ['user' => $user, 'access_token' => $token, 'expires_in' => $this->jwt->getTTL()];
     }
 
     //刷新token
-    public function refreshToken() {
+    public function refreshToken()
+    {
         $token = $this->jwt->refreshToken();
-        return $this->helper->success(['access_token' => (string) $token, 'expires_in' => $jwt->getTTL()]);
+        return ['access_token' => (string) $token, 'expires_in' => $this->jwt->getTTL()];
     }
 
     //退出登录
-    public function logout() {
+    public function logout()
+    {
         try {
             $this->jwt->logout();
         } catch (\Exception $e) {
@@ -78,7 +83,8 @@ class IndexController extends AbstractController {
     }
 
     //验证码
-    public function captcha() {
+    public function captcha()
+    {
         $length = $this->request->input('length', 4);
         $width = $this->request->input('width', 80);
         $height = $this->request->input('height', 35);
