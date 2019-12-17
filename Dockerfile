@@ -52,7 +52,7 @@ WORKDIR /opt/www
 
 RUN composer install \
     && composer dump-autoload -o \
-    && php /opt/www/bin/hyperf.php di:init-proxy
+    && ./init-proxy.sh
 
 EXPOSE 9501
 EXPOSE 9504
