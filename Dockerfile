@@ -50,6 +50,8 @@ COPY . /opt/www
 
 WORKDIR /opt/www
 
+RUN chmod u+x ./init-proxy.sh
+
 RUN composer install \
     && composer dump-autoload -o \
     && ./init-proxy.sh
