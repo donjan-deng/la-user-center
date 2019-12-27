@@ -50,7 +50,7 @@ class RoleController extends AbstractController
         }
         unset($data['permissions']);
         $result->update($data);
-        $result->permissions()->sync($permissions);
+        $result->syncPermissions($permissions);
         return $result;
     }
 

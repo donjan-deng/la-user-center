@@ -28,7 +28,7 @@ Router::post('/users', 'App\Controller\UserController@store', ['middleware' => $
 Router::put('/users/{id:\d+}', 'App\Controller\UserController@update', ['middleware' => $middleware]);
 Router::get('/users/{id:\d+}', 'App\Controller\UserController@show', ['middleware' => $middleware]);
 Router::delete('/users/{id:\d+}', 'App\Controller\UserController@delete', ['middleware' => $middleware]);
-Router::put('/users/roles', 'App\Controller\UserController@roles', ['middleware' => $middleware]);
+Router::put('/users/{id:\d+}/roles', 'App\Controller\UserController@roles', ['middleware' => $middleware]);
 //Role
 Router::get('/roles', 'App\Controller\RoleController@index', ['middleware' => $middleware]);
 Router::post('/roles', 'App\Controller\RoleController@store', ['middleware' => $middleware]);

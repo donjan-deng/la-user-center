@@ -60,7 +60,7 @@ class PermissionTableSeeder extends Seeder
                 'id' => 6,
                 'parent_id' => 2,
                 'url' => '',
-                'name' => '/user-center/users/put',
+                'name' => '/user-center/users/{id:\d+}/put',
                 'display_name' => '编辑用户',
                 'guard_name' => 'web'
             ],
@@ -75,7 +75,7 @@ class PermissionTableSeeder extends Seeder
                 'id' => 8,
                 'parent_id' => 3,
                 'url' => '',
-                'name' => '/user-center/roles/put',
+                'name' => '/user-center/roles/{id:\d+}/put',
                 'display_name' => '编辑角色',
                 'guard_name' => 'web'
             ],
@@ -91,7 +91,7 @@ class PermissionTableSeeder extends Seeder
                 'id' => 10,
                 'parent_id' => 4,
                 'url' => '',
-                'name' => '/user-center/permissions/put',
+                'name' => '/user-center/permissions/{id:\d+}/put',
                 'display_name' => '编辑节点',
                 'guard_name' => 'web'
             ],
@@ -99,7 +99,7 @@ class PermissionTableSeeder extends Seeder
                 'id' => 11,
                 'parent_id' => 4,
                 'url' => '',
-                'name' => '/user-center/users/roles/put',
+                'name' => '/user-center/users/{id:\d+}/roles/put',
                 'display_name' => '分配角色',
                 'guard_name' => 'web'
             ]
@@ -109,7 +109,7 @@ class PermissionTableSeeder extends Seeder
                     'guard_name' => 'web'
         ]);
         $role->permissions()->sync([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
-        $user = Model\User::where('user_id',1)->first();
+        $user = Model\User::where('user_id', 1)->first();
         $user->assignRole($role);
     }
 

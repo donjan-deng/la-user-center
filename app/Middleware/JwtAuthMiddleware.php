@@ -6,7 +6,7 @@ namespace App\Middleware;
 
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
-use \Hyperf\Utils\Context;
+use Hyperf\Utils\Context;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -40,7 +40,8 @@ class JwtAuthMiddleware implements MiddlewareInterface
                 if (!$user) {
                     throw new TokenValidException('Token未验证通过', 401);
                 }
-                $this->request->user = $user;
+                $request = $request->withAttribute('user', $user);
+                Context::set(ServerRequestInterface::class, $request);
             }
         } catch (\Exception $e) {
             throw new TokenValidException('Token未验证通过', 401);

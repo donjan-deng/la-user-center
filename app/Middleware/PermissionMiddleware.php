@@ -19,12 +19,6 @@ class PermissionMiddleware implements MiddlewareInterface
 
     /**
      * @Inject
-     * @var RequestInterface
-     */
-    protected $request;
-
-    /**
-     * @Inject
      * @var ConfigInterface
      */
     protected $config;
@@ -34,11 +28,10 @@ class PermissionMiddleware implements MiddlewareInterface
         //去掉路由参数
         $dispatcher = $request->getAttribute('Hyperf\HttpServer\Router\Dispatched');
         $route = $dispatcher->handler->route;
-        $path = preg_replace("/\/\{(.*)\}/i", '', $route);
-        $path = '/' . $this->config->get('app_name') . $path . '/' . $this->request->getMethod();
+        $path = '/' . $this->config->get('app_name') . $route . '/' . $request->getMethod();
         $path = strtolower($path);
         $permission = Permission::getPermissions(['name' => $path])->first();
-        $user = $this->request->user;
+        $user = $request->getAttribute('user');
         if ($user && (!$permission || ($permission && $user->checkPermissionTo($permission)))) {
             return $handler->handle($request);
         }

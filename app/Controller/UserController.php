@@ -76,15 +76,14 @@ class UserController extends AbstractController
         
     }
 
-    public function roles()
+    public function roles($id)
     {
-        $id = $this->request->input('user_id', 0);
         $roles = $this->request->input('roles', []);
         $model = Model\User::where('user_id', '<>', config('app.super_admin'))->find($id);
         if (!$model) {
             throw new Exception\AppNotFoundException("用户ID：{$id}不存在");
         }
-        $model->roles()->sync($roles);
+        $model->assignRole($roles);
         return $model;
     }
 

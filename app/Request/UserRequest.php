@@ -7,39 +7,38 @@ namespace App\Request;
 use Hyperf\Validation\Request\FormRequest;
 use Hyperf\Validation\Rule;
 
-class UserRequest extends FormRequest {
+class UserRequest extends BaseRequest
+{
 
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool {
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     */
-    public function rules(): array {
+    public function rules(): array
+    {
         return [
             'username' => [
                 'bail',
                 'required',
                 'alpha_dash',
-                Rule::unique('user')->ignore($this->input('user_id', 0), 'user_id'),
+                Rule::unique('user')->ignore($this->routeParam('id', 0), 'user_id'),
+            ],
+            'phone' => [
+                'bail',
+                'required',
+                Rule::unique('user')->ignore($this->routeParam('id', 0), 'user_id'),
             ],
             'real_name' => 'required',
             'password' => 'sometimes|same:confirm_password',
         ];
     }
 
-    public function attributes(): array {
+    public function attributes(): array
+    {
         return [
             'username' => '用户名',
             'real_name' => '姓名'
         ];
     }
 
-    public function messages(): array {
+    public function messages(): array
+    {
         return [
             'username.required' => '用户名必填',
             'username.unique' => '用户名已存在',

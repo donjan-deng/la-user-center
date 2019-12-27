@@ -7,13 +7,8 @@ namespace App\Request;
 use Hyperf\Validation\Request\FormRequest;
 use Hyperf\Validation\Rule;
 
-class RoleRequest extends FormRequest
+class RoleRequest extends BaseRequest
 {
-
-    public function authorize(): bool
-    {
-        return true;
-    }
 
     public function rules(): array
     {
@@ -21,7 +16,7 @@ class RoleRequest extends FormRequest
             'name' => [
                 'bail',
                 'required',
-                Rule::unique('roles')->ignore($this->input('id', 0)),
+                Rule::unique('roles')->ignore($this->routeParam('id', 0)),
             ],
             'permissions' => 'Required|Array',
         ];
