@@ -4,6 +4,8 @@
 
 ## 安装
 
+> 注意,使用的mysql未启用sql_model的ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES
+
 ### 已有环境
 ```
 git clone https://github.com/donjan-deng/la-user-center.git
