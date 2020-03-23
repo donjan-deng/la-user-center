@@ -83,7 +83,7 @@ class UserController extends AbstractController
         if (!$model) {
             throw new Exception\AppNotFoundException("用户ID：{$id}不存在");
         }
-        $model->assignRole($roles);
+        $model->syncRoles($roles);
         return $model;
     }
 
