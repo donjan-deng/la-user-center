@@ -3,6 +3,7 @@
 return [
     //model设置
     'models' => [
+        'user' => App\Model\User::class,
         'permission' => App\Model\Permission::class,
         'role' => App\Model\Role::class,
     ],
